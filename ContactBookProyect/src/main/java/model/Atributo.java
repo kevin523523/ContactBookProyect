@@ -11,11 +11,18 @@ package model;
 
 public class Atributo {
     private String nombre;
-    private String valor;
+    private String apellido;
+    private String n_telefono;
+    private String direccion;
 
-    public Atributo(String nombre, String valor) {
+    public Atributo() {
+    }
+
+    public Atributo(String nombre, String apellido, String n_telefono, String direccion) {
         this.nombre = nombre;
-        this.valor = valor;
+        this.apellido = apellido;
+        this.n_telefono = n_telefono;
+        this.direccion = direccion;
     }
 
     public String getNombre() {
@@ -26,11 +33,29 @@ public class Atributo {
         this.nombre = nombre;
     }
 
-    public String getValor() {
-        return valor;
+    public String getApellido() {
+        return apellido;
     }
 
-    public void setValor(String valor) {
-        this.valor = valor;
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
     }
+
+    public String getN_telefono() {
+        return n_telefono;
+    }
+
+    public void setN_telefono(String n_telefono) {
+        this.n_telefono = n_telefono;
+    }
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
+    
+    
 }
