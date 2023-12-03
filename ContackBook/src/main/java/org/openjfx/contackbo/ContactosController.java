@@ -4,8 +4,10 @@
  */
 package org.openjfx.contackbo;
 
+import datos.CONSTANTES;
 import model.Contacto;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -18,6 +20,7 @@ import java.lang.System.Logger;
 import java.lang.System.Logger.Level;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -26,6 +29,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 
 import javafx.scene.control.Label;
@@ -33,8 +37,6 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.RadioButton;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -63,21 +65,13 @@ public class ContactosController implements Initializable {
     @FXML
     private ComboBox cbCiudad;
     @FXML
-    private TableView jTRegistros;
-    @FXML
     private TextField txtCelular;
     @FXML
     private TextField txtTelefonoFijo;
     @FXML
+    private TextField txtDireccion;
+    @FXML
     private TextField txtCorreo;
-    @FXML
-    private TableColumn<Contacto, String> primeraColumna;
-    @FXML
-    private TableColumn<Contacto, String> segundaColumna;
-    @FXML
-    private TableColumn<Contacto, String> terceraColumna;
-    @FXML
-    private TableColumn<Contacto, String> cuartaColumna;
     @FXML
     private String separadorArchivo = System.getProperty("file.separator");
     @FXML
@@ -126,7 +120,8 @@ public class ContactosController implements Initializable {
     private File imagenItemGuardar;
     @FXML
     private File imagenItemReporte;
-
+    @FXML
+    private Button btnGuardar;
 
     /*Metodo para llenar comboBox*/
     @FXML
@@ -134,14 +129,36 @@ public class ContactosController implements Initializable {
         /*con esto borramos los Items que trae por defecto los 
          choice box*/
         cbCiudad.getItems().clear();
-        cbCiudad.setItems(FXCollections.observableArrayList("Alcala", "Andalucia", "Ansermanuevo",
-                "Argelia", "Bolivar", "Buenaventura", "Buga", "Bugalagrande", "Caicedonia", "Cali",
-                "Calima Darien", "Candelaria", "Cartago", "Cartago", "El Aguila", "El Cairo",
-                "El Cerrito", "El Dovio", "Florida", "Ginebra", "Guacari", "Jamundi", "La Cumbre",
-                "La Union", "La Victoria", "Obando", "Palmira", "Pradera", "Restrepo", "Riofrío",
-                "Roldanillo", "San Pedro", "Sevilla", "Toro", "Trujillo", "Tulua", "Ulloa", "Versalles",
-                "Vijes", "Yotoco", "Zarzal"));
+        cbCiudad.setItems(FXCollections.observableArrayList("Ambato", "Babahoyo", "Cuenca", "Daule", "Durán", "Esmeraldas", "Guayaquil", "Ibarra", "Machala", "Manta", "Milagro", "Palestina", "Quito"));
     }
+
+    @FXML
+    private void guardar() throws IOException {
+        ArrayList<Contacto> contactos = new ArrayList<Contacto>();
+        String nombre = txtNombre.getText();
+        String apellido = txtApellido.getText();
+        String sexo = ((RadioButton) grupoSexo.getSelectedToggle()).getText();
+        String direccion = txtDireccion.getText();
+        String correo = txtCorreo.getText();
+        String celular = txtCelular.getText();
+        String telefonoFijo = txtTelefonoFijo.getText();
+        String ciudad = cbCiudad.getValue().toString();
+
+        try (BufferedWriter outputStream
+                = new BufferedWriter(new FileWriter(CONSTANTES.ARCHIVOS + "contactos.txt", true))) {
+            Contacto contacto = new Contacto(nombre, apellido, sexo, ciudad, direccion, celular,telefonoFijo,correo);
+            contactos.add(contacto);
+            outputStream.write(nombre + ";" + apellido+ ";" + sexo+ ";"+ciudad+ ";"+direccion+ ";" +celular+ ";" +telefonoFijo+ ";"+correo+"\n");
+            outputStream.flush();
+            outputStream.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("Error opening the file out.txt." + e.getMessage());
+        } catch (IOException e) {
+            System.out.println("IOException." + e.getMessage());
+        }       
+        App.setRoot("Inicio");
+        }
+
 
     /*Metodo para que solo se pueda escoger un radio boton*/
     @FXML
@@ -152,101 +169,12 @@ public class ContactosController implements Initializable {
         rbMasculino.setToggleGroup(grupoSexo);
     }
 
-    /*Metodo para cargar Columnas*/
-    @FXML
-    public void columnas() {
-        primeraColumna = new TableColumn<>("Nombre");
-        segundaColumna = new TableColumn<>("Apellido");
-        terceraColumna = new TableColumn<>("Tel Celular");
-        cuartaColumna = new TableColumn<>("Correo");
-        jTRegistros.getColumns().addAll(primeraColumna, segundaColumna, terceraColumna, cuartaColumna);
-    }
-
-    /*Metodo para cargar filas*/
-    @FXML
-    public void filas() {
-        primeraColumna.setCellValueFactory(new PropertyValueFactory<Contacto, String>("nombre"));
-        segundaColumna.setCellValueFactory(new PropertyValueFactory<Contacto, String>("apellido"));
-        terceraColumna.setCellValueFactory(new PropertyValueFactory<Contacto, String>("telefonoCelular"));
-        cuartaColumna.setCellValueFactory(new PropertyValueFactory<Contacto, String>("correo"));
-
-    }
-
-    /*Metodos para cargar la tabla con los datos que 
-     agrego el usuario*/
-    @FXML
-    public void cargarEnLaTabla(ActionEvent evento) {
-
-        // Validacion si el nombre esta vacio
-        if (txtNombre.getText().isEmpty()) {
-            mostrarAlerta("Error de Validación", "El nombre no puede estar vacío.");
-        }
-        // Validacion si el apellido esta vacio
-        if (txtApellido.getText().isEmpty()) {
-            mostrarAlerta("Error de Validación", "El apellido no puede estar vacío.");
-        }
-        // Validacion del correo electrónico
-        if (txtCorreo.getText().isEmpty() && !esFormatoCorreoValido(txtCorreo.getText())) {
-            mostrarAlerta("Error de Validación", "El formato del correo electrónico personal no es válido.");
-
-        }
-        // Validacion del teléfono 
-        if (txtCelular.getText().isEmpty() && !esNumero(txtCelular.getText())) {
-            mostrarAlerta("Error de Validación", "El número de teléfono debe ser numérico.");
-
-        }
-        else {
-            filas();
-            final ObservableList<Contacto> contacto = FXCollections.observableArrayList(
-                    new Contacto(txtNombre.getText(), txtApellido.getText(), txtCelular.getText(), txtCorreo.getText()));
-            jTRegistros.getItems().addAll(contacto);
-
-        }
-       
-    }
     private void mostrarAlerta(String titulo, String mensaje) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(titulo);
         alert.setHeaderText(null);
         alert.setContentText(mensaje);
         alert.showAndWait();
-    }
-
-    private boolean esFormatoCorreoValido(String correo) {
-        return correo.matches("\\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Z|a-z]{2,}\\b");
-    }
-
-    private boolean esNumero(String texto) {
-        return texto.matches("\\d+");
-    }
-
-    /*Metodo para cargar la tabla apenas arranque la apliacion*/
-    @FXML
-    public void cargarRegistrosALaTabla() {
-        try {
-            lectorArchivo = new FileReader(file);
-            almacen = new BufferedReader(lectorArchivo);
-            try {
-                while ((linea = almacen.readLine()) != null) {
-                    if (!linea.isEmpty()) {
-                        pos = linea.split(";");
-                        almacenFilaUno = pos[0];
-                        almacenFilaDos = pos[1];
-                        almacenFilaTres = pos[2];
-                        almacenFilaCuatro = pos[3];
-                        filas();
-                        final ObservableList<Contacto> contacto = FXCollections.observableArrayList(
-                                new Contacto(almacenFilaUno, almacenFilaDos, almacenFilaTres,
-                                almacenFilaCuatro));
-                        jTRegistros.getItems().addAll(contacto);
-                    }
-                }
-            } catch (IOException ex) {
-                
-            }
-        } catch (FileNotFoundException ex) {
-           
-        }
     }
 
     /*Metodo para que el usuario escoja una imagen del contacto
@@ -263,7 +191,7 @@ public class ContactosController implements Initializable {
         rutaImagen = elegir.showOpenDialog(primaryStage);
         try {
             if (rutaImagen == null) {
-                mostrarAlerta("Error","Usted no ha seleccionado ninguna imagen");
+                mostrarAlerta("Error", "Usted no ha seleccionado ninguna imagen");
             } else {
                 inputStream = new FileInputStream(rutaImagen);
                 image = new Image(inputStream);
@@ -274,10 +202,9 @@ public class ContactosController implements Initializable {
             }
 
         } catch (FileNotFoundException ex) {
-            
+
         }
     }
-
 
     @FXML
     public void validarCampos() {
@@ -303,12 +230,11 @@ public class ContactosController implements Initializable {
         }
 
     }
-    
-    
+
     /*Metodo para cargar la imagen de muestra apenas carga el
      programa*/
     @FXML
-    public void imagenPrincipio() {
+    public void imagenPrincipio() {/*
         try {
             imagen = new File(rutaDondeSeCreaArchivo.concat(separadorArchivo.concat("sinImagen.png")));
             inputStream = new FileInputStream(imagen);
@@ -320,11 +246,11 @@ public class ContactosController implements Initializable {
         } catch (FileNotFoundException ex) {
             
         }
-
+         */
     }
-    
-     @FXML
-    public void cargarItemsMenuBar() {
+
+    @FXML
+    public void cargarItemsMenuBar() {/*
         Menu menuArchivo = new Menu("Archivo");
         MenuItem menuGuardar = new MenuItem("Guardar");
         MenuItem menuReporte = new MenuItem("Reporte");
@@ -396,12 +322,8 @@ public class ContactosController implements Initializable {
         menuArchivo.getItems().add(menuGuardar);
         menuArchivo.getItems().add(menuReporte);
         mbGuardar.getMenus().add(menuArchivo);
-
+         */
     }
-    
-    
-    
-    
 
     @FXML
     public void validarExistenciaArchivo() {
@@ -414,17 +336,11 @@ public class ContactosController implements Initializable {
         }
     }
 
-
-
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         mbGuardar.getMenus().clear();
-        jTRegistros.getColumns().clear();
         BotonGrupo();
-        imagenPrincipio();
         llenarComboBox();
-        columnas();
-        cargarRegistrosALaTabla();
 
     }
 }
