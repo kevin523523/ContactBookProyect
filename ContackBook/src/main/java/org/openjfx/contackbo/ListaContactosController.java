@@ -43,6 +43,7 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -54,89 +55,58 @@ public class ListaContactosController implements Initializable {
 
     /*Anotacion que etiqueta una clase o miembro como accesible*/
     @FXML
-    private TableView jTRegistros;
+    private TableView<Contacto> tabContactos;
     @FXML
-    private TableColumn<Contacto, String> primeraColumna;
+    private TableColumn<Contacto, String> colNombre;
     @FXML
-    private TableColumn<Contacto, String> segundaColumna;
+    private TableColumn<Contacto, String> colApellido;
     @FXML
-    private TableColumn<Contacto, String> terceraColumna;
+    private TableColumn<Contacto, String> colVisualizar;
     @FXML
-    private TableColumn<Contacto, String> cuartaColumna;
+    private ImageView Contactopng;
     @FXML
-    private String separadorArchivo = System.getProperty("file.separator");
-    @FXML
-    private String rutaDondeSeCreaArchivo = System.getProperty("user.dir");
-    @FXML
-    private File file = new File(rutaDondeSeCreaArchivo.concat(separadorArchivo.concat("Agenda.txt")));
-    @FXML
+    private AnchorPane panel;
+
+    private final String separadorArchivo = System.getProperty("file.separator");
+    private final String rutaDondeSeCreaArchivo = System.getProperty("user.dir");
+    private final File file = new File(rutaDondeSeCreaArchivo.concat(separadorArchivo.concat("Contacto.txt")));
     private String linea;
-    @FXML
     private String[] pos;
-    @FXML
     private FileReader lectorArchivo;
-    @FXML
     private BufferedReader almacen;
-    @FXML
     private String almacenFilaUno;
-    @FXML
     private String almacenFilaDos;
-    @FXML
     private String almacenFilaTres;
-    @FXML
     private String almacenFilaCuatro;
-    @FXML
-    private File imagen;
-    @FXML
-    private Label lbImagen;
-    @FXML
-    private Stage primaryStage;
-    @FXML
+    private String almacenFilaCinco;
+    private String almacenFilaSeis;
+    private String almacenFilaSiete;
+    private String almacenFilaOcho;
     private FileWriter fichero;
-    @FXML
-    private ImageView visor;
-    @FXML
-    private InputStream inputStream;
-    @FXML
-    private Image image;
-    @FXML
-    private MenuBar mbGuardar;
-    @FXML
-    private String subString;
-    @FXML
-    private int longitudCadena;
-    @FXML
-    private File rutaImagen;
-    @FXML
-    private File imagenItemGuardar;
-    @FXML
-    private File imagenItemReporte;
+    private final  ObservableList<Contacto> contactos = FXCollections.observableArrayList();
+
 
     /*Metodo para cargar Columnas*/
-    @FXML
-    public void columnas() {
+    /*public void columnas() {
         primeraColumna = new TableColumn<>("Nombre");
         segundaColumna = new TableColumn<>("Apellido");
         terceraColumna = new TableColumn<>("Tel Celular");
         cuartaColumna = new TableColumn<>("Correo");
         jTRegistros.getColumns().addAll(primeraColumna, segundaColumna, terceraColumna, cuartaColumna);
-    }
+    }*/
 
     /*Metodo para cargar filas*/
-    @FXML
     public void filas() {
-        primeraColumna.setCellValueFactory(new PropertyValueFactory<Contacto, String>("nombre"));
-        segundaColumna.setCellValueFactory(new PropertyValueFactory<Contacto, String>("apellido"));
-        terceraColumna.setCellValueFactory(new PropertyValueFactory<Contacto, String>("telefonoCelular"));
-        cuartaColumna.setCellValueFactory(new PropertyValueFactory<Contacto, String>("correo"));
-
+        colNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+        colNombre.setStyle("-fx-alignment: CENTER-LEFT");
+        colApellido.setCellValueFactory(new PropertyValueFactory<>("apellido"));
+        colApellido.setStyle("-fx-alignment: CENTER-LEFT");
     }
 
     /*Metodos para cargar la tabla con los datos que 
      agrego el usuario*/
-    @FXML
     public void cargarEnLaTabla(ActionEvent evento) {
-/*
+        /*
         // Validacion si el nombre esta vacio
         if (txtNombre.getText().isEmpty()) {
             mostrarAlerta("Error de Validación", "El nombre no puede estar vacío.");
@@ -162,12 +132,11 @@ public class ListaContactosController implements Initializable {
             jTRegistros.getItems().addAll(contacto);
 
         }*/
-       
+
     }
 
     /*Metodo para cargar la tabla apenas arranque la apliacion*/
-    @FXML
-    public void cargarRegistrosALaTabla() {
+    public void cargarRegistrosAlArraylist() {
         try {
             lectorArchivo = new FileReader(file);
             almacen = new BufferedReader(lectorArchivo);
@@ -179,24 +148,33 @@ public class ListaContactosController implements Initializable {
                         almacenFilaDos = pos[1];
                         almacenFilaTres = pos[2];
                         almacenFilaCuatro = pos[3];
-                        filas();
-                        final ObservableList<Contacto> contacto = FXCollections.observableArrayList(
-                                new Contacto(almacenFilaUno, almacenFilaDos, almacenFilaTres,
-                                almacenFilaCuatro));
-                        jTRegistros.getItems().addAll(contacto);
+                        almacenFilaCinco = pos[4];
+                        almacenFilaSeis = pos[5];
+                        almacenFilaSiete = pos[6];
+                        almacenFilaOcho = pos[7];
+
+                       Contacto persona = new Contacto(almacenFilaUno, almacenFilaDos, almacenFilaTres,
+                               almacenFilaCuatro,  almacenFilaCinco, almacenFilaSeis, almacenFilaSiete, almacenFilaOcho);
+                       contactos.addAll(persona);
+                       tabContactos.setItems(contactos);
                     }
                 }
             } catch (IOException ex) {
-                
+
             }
         } catch (FileNotFoundException ex) {
-           
+
         }
     }
+    
+    /*Metodo para cargar la tabla apenas arranque la apliacion*/
+    public void cargarRegistrosALaTabla() {
+        colNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+        colNombre.setStyle("-fx-alignment: CENTER-LEFT");
+        colApellido.setCellValueFactory(new PropertyValueFactory<>("apellido"));
+        colApellido.setStyle("-fx-alignment: CENTER-LEFT");
+    }
 
-    
-    
-     @FXML
     public void cargarItemsMenuBar() {
         /*
         Menu menuArchivo = new Menu("Archivo");
@@ -270,14 +248,9 @@ public class ListaContactosController implements Initializable {
         menuArchivo.getItems().add(menuGuardar);
         menuArchivo.getItems().add(menuReporte);
         mbGuardar.getMenus().add(menuArchivo);
-*/
+         */
     }
-    
-    
-    
-    
 
-    @FXML
     public void validarExistenciaArchivo() {
         if (file.exists() == false) {
             try {
@@ -287,37 +260,33 @@ public class ListaContactosController implements Initializable {
             }
         }
     }
-    
-        @FXML
+
     public void agregarContacto() throws IOException {
         App.setRoot("Exposicion");
     }
 
-
-
-
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        mbGuardar.getMenus().clear();
-        jTRegistros.getColumns().clear();
-        columnas();
+       
+        cargarRegistrosAlArraylist();
         cargarRegistrosALaTabla();
 
     }
+
     void closeWindows() {
-        
+
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("Inicio.fxml"));
             Parent root = loader.load();
-           
+
             Scene scene = new Scene(root);
             Stage stage = new Stage();
             stage.setScene(scene);
             stage.show();
 
-            Stage myStage = (Stage) this.mbGuardar.getScene().getWindow();
+            Stage myStage = (Stage) this.tabContactos.getScene().getWindow();
             myStage.close();
-            
+
         } catch (IOException ex) {
             java.util.logging.Logger.getLogger(InicioController.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }

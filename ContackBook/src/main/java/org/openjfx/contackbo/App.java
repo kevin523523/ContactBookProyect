@@ -12,7 +12,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 
 /**
- * JavaFX App
+ * JavaFX App 
  */
 public class App extends Application {
 
