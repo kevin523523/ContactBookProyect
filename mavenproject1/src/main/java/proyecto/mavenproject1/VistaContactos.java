@@ -110,7 +110,6 @@ public class VistaContactos {
         Button btnfilt = new Button("Filtrar");
         lineaBotones.getChildren().addAll(btnadd, btnprv, btnnxt, btnord, criterio, btnfilt, filtro);
 
-        lineaBotones.getChildren().addAll(btnadd, btnemp, btnprv, btnnxt, btnord, criterio);
 
         VBox.setMargin(lineaBotones, new Insets(10));
         lineaBotones.setAlignment(Pos.BASELINE_RIGHT);
