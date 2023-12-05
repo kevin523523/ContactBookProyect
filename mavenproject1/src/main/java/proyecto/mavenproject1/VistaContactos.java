@@ -102,17 +102,22 @@ public class VistaContactos {
         }
 
         //-----------------------Botones---------------------------//
-        Button btnadd = new Button("Agregar");
-        Button btnref = new Button("Refresh");
+        Button btnadd = new Button("Agregar Persona");
+        Button btnemp = new Button("Agregar Empresa");
         Button btnnxt = new Button(">");
         Button btnprv = new Button("<");
         Button btnord = new Button("Ordenar");
+<<<<<<< HEAD
         Button btnfilt = new Button("Filtrar");
         lineaBotones.getChildren().addAll(btnadd, btnprv, btnnxt, btnord, criterio, btnfilt, filtro);
+=======
+        lineaBotones.getChildren().addAll(btnadd, btnemp, btnprv, btnnxt, btnord, criterio);
+>>>>>>> 09e704bb1e6b3bd011846504521e9e2ae3489045
 
         VBox.setMargin(lineaBotones, new Insets(10));
         lineaBotones.setAlignment(Pos.BASELINE_RIGHT);
         btnadd.setOnMouseClicked(e -> crearContacto());
+<<<<<<< HEAD
         btnord.setOnMouseClicked(e -> {
             String criterioOrden = criterio.getText().trim();
             if (!criterioOrden.isEmpty()) {
@@ -135,6 +140,10 @@ public class VistaContactos {
 
         if (listaContactos != null) {
             btnref.setOnMouseClicked(e -> refresh(it, listaContactos));
+=======
+        if (listaContactos != null){
+            btnemp.setOnMouseClicked(e -> refresh(it, listaContactos));
+>>>>>>> 09e704bb1e6b3bd011846504521e9e2ae3489045
             btnnxt.setOnMouseClicked(e -> next(it));
             btnprv.setOnMouseClicked(e -> previous(it));
         }
@@ -180,6 +189,7 @@ public class VistaContactos {
         root.getChildren().clear();
 
         int num2 = 0;
+<<<<<<< HEAD
         if (link.size() < 5) {
             while (num2 < link.size()) {
                 it.previous();
@@ -187,6 +197,16 @@ public class VistaContactos {
             }
         } else {
             while (num2 < 5) {
+=======
+        if (link.size() < 5){
+            while (num2 < link.size()){
+                it.previous();
+                num2++;
+            }
+        }
+        else{
+            while (num2 < 5){
+>>>>>>> 09e704bb1e6b3bd011846504521e9e2ae3489045
                 it.previous();
                 num2++;
             }
@@ -430,8 +450,12 @@ public class VistaContactos {
     private void editar(Perfil perfil) {
         root.getChildren().clear();
         datos.getChildren().clear();
+<<<<<<< HEAD
 
         root.getChildren().addAll(titulo, datos, btnsave);
+=======
+   
+>>>>>>> 09e704bb1e6b3bd011846504521e9e2ae3489045
 
         txtnombre = new TextField(perfil.getNombre());
         lblname.setText("Nombre: ");
@@ -488,11 +512,27 @@ public class VistaContactos {
         ob.add("Ecuador");
         ob.add("Francia");
         ob.add("Guatemala");
+<<<<<<< HEAD
+=======
+        
+        contactos = new ComboBox<>();
+        ObservableList<String> cb = contactos.getItems();
+        if (listaContactos != null){
+            for (Perfil contacto : listaContactos){
+                cb.add(contacto.getNombre());
+            }
+        }
+>>>>>>> 09e704bb1e6b3bd011846504521e9e2ae3489045
 
+        
         btnsave = new Button("Guardar");
         btnsave.setOnMouseClicked(e -> guardar(perfil));
 
+<<<<<<< HEAD
         root.getChildren().addAll(titulo, datos, btnfoto, imagenes, btnborrar, pais, btnsave);
+=======
+        root.getChildren().addAll(titulo, datos, btnfoto,  imagenes, btnborrar, pais, contactos, btnsave);
+>>>>>>> 09e704bb1e6b3bd011846504521e9e2ae3489045
 
     }
 
@@ -504,9 +544,11 @@ public class VistaContactos {
         String direccion = txtdir.getText();
         String email = txtmail.getText();
         String numero = txtnum.getText();
-
         linkedList fotos = perfil.getFotos();
+<<<<<<< HEAD
 
+=======
+>>>>>>> 09e704bb1e6b3bd011846504521e9e2ae3489045
         String nacionalidad = pais.valueProperty().get();
         fotos = perfil.getFotos();
 
