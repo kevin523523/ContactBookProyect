@@ -80,6 +80,7 @@ public class linkedList<E> implements List<E>, Serializable{
         
         return it;
     }
+    
 
     @Override
     public Object[] toArray() {
