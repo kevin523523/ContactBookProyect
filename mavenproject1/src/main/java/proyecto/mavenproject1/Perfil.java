@@ -1,37 +1,45 @@
 package proyecto.mavenproject1;
 
 import java.io.Serializable;
-import java.util.Comparator;
+import java.util.ArrayList;
 
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
+
 /**
  *
  * @author LuisA
  */
-public class Perfil implements Serializable, Comparable<Perfil> {
-
+public class Perfil implements Serializable {
+    
     public String nombre;
     public String apellido;
     public String dirección;
     public String email;
     public String numero;
-    public String identificador;
-    public linkedList<String> fotos;
-    public boolean favorito;
     public String pais;
-    public String tipo;
+    public linkedList<String> identificador;
+    public linkedList<String> fotos;
+    public linkedList<String> contactos;
+
+    public boolean favorito;
 
 
-    public Perfil(String nombre, String apellido, String dirección, String email, String numero, linkedList<String> fotos){
+    
+
+    public Perfil(String nombre, String apellido, String dirección, String email, String numero, String pais, linkedList<String> contactos, linkedList<String> identificador, linkedList<String> fotos){
+
         this.nombre = nombre;
         this.apellido = apellido;
         this.dirección = dirección;
         this.email = email;
         this.numero = numero;
+        this.pais = pais;
+        this.contactos = contactos;
+        this.identificador = identificador;
         this.fotos = fotos;
         this.favorito = false;
     }
@@ -51,14 +59,6 @@ public class Perfil implements Serializable, Comparable<Perfil> {
     public void setApellido(String apellido) {
         this.apellido = apellido;
     }
-    
-    public String getEmails() {
-        return email;
-    }
-
-    public void setEmails(String emails) {
-        this.email = emails;
-    }
 
     public String getEmail() {
         return email;
@@ -76,36 +76,20 @@ public class Perfil implements Serializable, Comparable<Perfil> {
         this.numero = numero;
     }
 
-    public String getIdentificador() {
+    public linkedList<String> getIdentificador() {
         return identificador;
     }
 
-    public void setIdentificador(String identificador) {
+    public void setIdentificador(linkedList<String> identificador) {
         this.identificador = identificador;
     }
-
+    
     public String getNombre() {
         return nombre;
     }
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
-    }
-
-    public String getPais() {
-        return pais;
-    }
-
-    public void setPais(String pais) {
-        this.pais = pais;
-    }
-
-    public String getTipo() {
-        return tipo;
-    }
-
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
     }
 
     public linkedList<String> getFotos() {
@@ -124,16 +108,29 @@ public class Perfil implements Serializable, Comparable<Perfil> {
         this.favorito = favorito;
     }
 
+
+    public linkedList<String> getContactos() {
+        return contactos;
+    }
+
+    public void setContactos(linkedList<String> contactos) {
+        this.contactos = contactos;
+    }
+
+    public String getPais() {
+        return pais;
+    }
+
+    public void setPais(String pais) {
+        this.pais = pais;
+    }
+    
+    
+
+
     @Override
-    public String toString() {
+    public String toString(){
         String s = "nombre: " + nombre + ", email: " + email + ", numero: " + numero + ", identificador: " + identificador + ", fotos:" + fotos.toString() + ", favorito: " + favorito;
         return s;
     }
-
-    @Override
-    public int compareTo(Perfil otroPerfil) {
-        return nombre.compareTo(otroPerfil.getNombre());
-    }
-
-
 }
