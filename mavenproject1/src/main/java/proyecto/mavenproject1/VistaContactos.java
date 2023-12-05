@@ -9,6 +9,7 @@ import java.io.FileOutputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.ListIterator;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -423,15 +424,47 @@ public class VistaContactos {
 
     public void ordenar(String criterio) {
         System.out.println(listaContactos);
+        Comparator<Perfil> comparadorApellido_Nombre = new Comparator<Perfil>() {
+            @Override
+            public int compare(Perfil perfil1, Perfil perfil2) {
+                // Comparar por apellido y luego por nombre
+                int comparacionApellido = perfil1.getApellido().compareTo(perfil2.getApellido());
+                if (comparacionApellido != 0) {
+                    return comparacionApellido;
+                }
+                return perfil1.getNombre().compareTo(perfil2.getNombre());
+            }
+        };
+        Comparator<Perfil> comparadorCantidadFotos = new Comparator<Perfil>() {
+            @Override
+            public int compare(Perfil perfil1, Perfil perfil2) {
+                if (perfil1.getFotos().size() == perfil2.getFotos().size()) {
+                    return 0;
+                } else {
+                    return 1;
+                }
+            }
+        };
+        // Comparador para ordenar por pais de residencia
+        Comparator<Perfil> comparadorPais = new Comparator<Perfil>() {
+            @Override
+            public int compare(Perfil perfil1, Perfil perfil2) {
+                if (perfil1.getPais() == perfil2.getPais()) {
+                    return 0;
+                }
+                return -1;
+            }
+        };
         if ("nombre".equalsIgnoreCase(criterio)) {
-            Collections.sort(listaContactos, Perfil.compareByApellidoYNombre());
+            Collections.sort(listaContactos, comparadorApellido_Nombre);
+
         } else if ("fotos".equalsIgnoreCase(criterio)) {
-            Collections.sort(listaContactos, Perfil.compareByCantidadFotos());
+            Collections.sort(listaContactos, comparadorCantidadFotos);
         } else if ("pais".equalsIgnoreCase(criterio)) {
-            Collections.sort(listaContactos, Perfil.compareByCountry());
+            Collections.sort(listaContactos,comparadorPais);
         }
-        cargarcontactos(it, listaContactos);
-        //refresh(it, listaContactos);
+        System.out.println(listaContactos);
+        refresh(it, listaContactos);
     }
 
 }
