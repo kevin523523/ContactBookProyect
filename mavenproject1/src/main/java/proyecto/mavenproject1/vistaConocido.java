@@ -100,6 +100,10 @@ public class vistaConocido {
         
 
         root.getChildren().addAll(titulo, imagenes, datos);
+        
+        var scene = new Scene(root, 640, 480);
+        secondaryStage.setScene(scene);
+        secondaryStage.show();
     }
     
     private void nextFoto(ListIterator it) {

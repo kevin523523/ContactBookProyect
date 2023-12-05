@@ -104,19 +104,19 @@ public class VistaContactos {
         }
         
         //-----------------------Botones---------------------------//
-        Button btnadd = new Button("Agregar");
-        Button btnref = new Button("Refresh");
+        Button btnadd = new Button("Agregar Persona");
+        Button btnemp = new Button("Agregar Empresa");
         Button btnnxt = new Button(">");
         Button btnprv = new Button("<");
 
         Button btnord = new Button("Ordenar");
-        lineaBotones.getChildren().addAll(btnadd, btnprv, btnnxt, btnord, criterio);
+        lineaBotones.getChildren().addAll(btnadd, btnemp, btnprv, btnnxt, btnord, criterio);
 
         VBox.setMargin(lineaBotones, new Insets(10));
         lineaBotones.setAlignment(Pos.BASELINE_RIGHT);
         btnadd.setOnMouseClicked(e -> crearContacto());
         if (listaContactos != null){
-            btnref.setOnMouseClicked(e -> refresh(it, listaContactos));
+            btnemp.setOnMouseClicked(e -> refresh(it, listaContactos));
             btnnxt.setOnMouseClicked(e -> next(it));
             btnprv.setOnMouseClicked(e -> previous(it));
         }
@@ -165,9 +165,17 @@ public class VistaContactos {
         root.getChildren().clear();
 
         int num2 = 0;
-        while (num2 < 5){
-            it.previous();
-            num2++;
+        if (link.size() < 5){
+            while (num2 < link.size()){
+                it.previous();
+                num2++;
+            }
+        }
+        else{
+            while (num2 < 5){
+                it.previous();
+                num2++;
+            }
         }
         
         root.getChildren().addAll(titulo, lineaBotones, atributos);
@@ -423,10 +431,7 @@ public class VistaContactos {
     private void editar(Perfil perfil) {
         root.getChildren().clear();
         datos.getChildren().clear();
-
-        
-        root.getChildren().addAll(titulo, datos, btnsave);
-
+   
 
         txtnombre = new TextField(perfil.getNombre());
         lblname.setText("Nombre: ");
@@ -484,12 +489,19 @@ public class VistaContactos {
         ob.add("Francia");
         ob.add("Guatemala");
         
-        
+        contactos = new ComboBox<>();
+        ObservableList<String> cb = contactos.getItems();
+        if (listaContactos != null){
+            for (Perfil contacto : listaContactos){
+                cb.add(contacto.getNombre());
+            }
+        }
 
+        
         btnsave = new Button("Guardar");
         btnsave.setOnMouseClicked(e -> guardar(perfil));
 
-        root.getChildren().addAll(titulo, datos, btnfoto,  imagenes, btnborrar, pais, btnsave);
+        root.getChildren().addAll(titulo, datos, btnfoto,  imagenes, btnborrar, pais, contactos, btnsave);
 
     }
 
@@ -501,11 +513,7 @@ public class VistaContactos {
         String direccion = txtdir.getText();
         String email = txtmail.getText();
         String numero = txtnum.getText();
-
         linkedList fotos = perfil.getFotos();
-        
-        
-
         String nacionalidad = pais.valueProperty().get();
         fotos = perfil.getFotos();
 
