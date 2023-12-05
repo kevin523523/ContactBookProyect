@@ -55,8 +55,10 @@ public class VistaContactos {
     Label lblmail;
     Label lblnum;
     GridPane datos = new GridPane();
+    ListIterator fotoit;
     Image image;
     ImageView view;
+    Button btnfoto;
 
     public VistaContactos(String archivo) {
         this.archivo = archivo;
@@ -206,6 +208,8 @@ public class VistaContactos {
     public void crearContacto() {
         root.getChildren().clear();
         root.setAlignment(Pos.CENTER);
+        
+        fotos = new linkedList<>();
 
         titulo.setText("Nuevo contacto");
         Font fuente = Font.font("Verdana", FontWeight.EXTRA_BOLD, 25);
@@ -234,17 +238,32 @@ public class VistaContactos {
 
         datos.setAlignment(Pos.CENTER);
 
-        Button btnfoto = new Button("Agregar Foto");
-        fotos = new linkedList<>();
-        btnfoto.setOnMouseClicked(e -> agregarFoto());
-        btnfoto.setAlignment(Pos.CENTER);
+        btnfoto = new Button("Agregar Foto");
+        btnfoto.setOnMouseClicked(e -> agregarFoto(fotos));
+        
+        HBox imagenes = new HBox();
+        view = new ImageView();
+        view.setFitHeight(100);
+        view.setFitWidth(100);
+        if (!fotos.isEmpty()){
+            fotoit = fotos.listIterator();
+            image = new Image("file:C:\\images\\" + fotoit.next());
+            view.setImage(image);
+        }
+        Button btnnxtft = new Button(">");
+        btnnxtft.setOnMouseClicked(e -> nextFoto(fotoit));
+        Button btnprvft = new Button("<");
+        btnprvft.setOnMouseClicked(e -> previousFoto(fotoit));
+        imagenes.getChildren().addAll(btnprvft, view, btnnxtft);
+        
+        Button btnborrar = new Button("X");
+        btnborrar.setOnMouseClicked(e -> borrarFoto(fotos, fotoit));
 
         Button btnagregar = new Button("Agregar");
         btnagregar.setOnMouseClicked(e -> agregarPerfil());
         btnagregar.setAlignment(Pos.CENTER);
 
-        root.getChildren().addAll(titulo, datos, btnagregar, btnfoto);
-//        root.setAlignment(Pos.CENTER);
+        root.getChildren().addAll(titulo, datos, imagenes, btnborrar, btnfoto, btnagregar);
     }
 
     public void agregarPerfil() {
@@ -306,18 +325,18 @@ public class VistaContactos {
 
         lblnum = new Label(perfil.getNumero());
         datos.add(lblnum, 0, 4);
+        
+        fotos = perfil.getFotos();
 
         HBox imagenes = new HBox();
-
-        fotos = perfil.getFotos();
-        System.out.println(fotos.toString());
-        ListIterator fotoit = fotos.listIterator();
-        image = new Image("file:C:\\Users\\LuisA\\OneDrive\\Escritorio\\images" + fotoit.next());
-        view = new ImageView(image);
-
+        view = new ImageView();
         view.setFitHeight(100);
         view.setFitWidth(100);
-
+        if (!fotos.isEmpty()){
+            fotoit = fotos.listIterator();
+            image = new Image("file:C:\\images\\" + fotoit.next());
+            view.setImage(image);  
+        }
         Button btnnxtft = new Button(">");
         btnnxtft.setOnMouseClicked(e -> nextFoto(fotoit));
         Button btnprvft = new Button("<");
@@ -342,9 +361,10 @@ public class VistaContactos {
         datos.add(lblname, 0, 0);
         datos.add(txtnombre, 1, 0);
 
+        txtApellido = new TextField();
         lblApellido.setText("Apellido: ");
-        datos.add(lblname, 0, 1);
-        datos.add(txtnombre, 1, 1);
+        datos.add(lblApellido, 0, 1);
+        datos.add(txtApellido, 1, 1);
 
         txtdir = new TextField();
         lbldir.setText("Dirección:  ");
@@ -360,11 +380,35 @@ public class VistaContactos {
         lblnum.setText("Número telefonico:  ");
         datos.add(lblnum, 0, 4);
         datos.add(txtnum, 1, 4);
+        
+        btnfoto = new Button("Agregar Foto");
+        btnfoto.setOnMouseClicked(e -> agregarFoto(fotos));
+        
+        HBox imagenes = new HBox();
+        view = new ImageView();
+        view.setFitHeight(100);
+        view.setFitWidth(100);
+        if (!perfil.getFotos().isEmpty()){
+            fotoit = perfil.getFotos().listIterator();
+            image = new Image("file:C:\\images\\" + fotoit.next());
+            view.setImage(image);
+        }
+        Button btnnxtft = new Button(">");
+        btnnxtft.setOnMouseClicked(e -> nextFoto(fotoit));
+        Button btnprvft = new Button("<");
+        btnprvft.setOnMouseClicked(e -> previousFoto(fotoit));
+        imagenes.getChildren().addAll(btnprvft, view, btnnxtft);
+        
+        Button btnborrar = new Button("X");
+        btnborrar.setOnMouseClicked(e -> borrarFoto(fotos, fotoit));
+        
+//        btnfoto = new Button("Agregar Foto");
+//        btnfoto.setOnMouseClicked(e -> agregarFoto(perfil.getFotos()));
 
         Button btnsave = new Button("Guardar");
         btnsave.setOnMouseClicked(e -> guardar(perfil));
 
-        root.getChildren().addAll(titulo, datos, btnsave);
+        root.getChildren().addAll(titulo, datos, imagenes, btnborrar, btnfoto, btnsave);
     }
 
     private void guardar(Perfil perfil) {
@@ -394,12 +438,12 @@ public class VistaContactos {
         }
 
         txtnombre.clear();
+        txtApellido.clear();
         txtdir.clear();
         txtmail.clear();
         txtnum.clear();
 
         datos.getChildren().clear();
-
         refresh(it, listaContactos);
     }
 
@@ -418,29 +462,50 @@ public class VistaContactos {
         refresh(it, listaContactos);
     }
 
-    private void agregarFoto() {
+    private void agregarFoto(linkedList fotos) {
         FileChooser f = new FileChooser();
-        f.setInitialDirectory(new File("C:\\Users\\LuisA\\OneDrive\\Escritorio\\images"));
+        f.setInitialDirectory(new File("C:\\images"));
         File selectedFile = f.showOpenDialog(primaryStage);
-//        System.out.println(selectedFile.getName());
 
-//        Path from = Paths.get(selectedFile.toURI());
-//        Path to = Paths.get("C:\\Users\\LuisA\\OneDrive\\Escritorio\\images");
-        String path = "C:\\Users\\LuisA\\OneDrive\\Escritorio\\images";
+        String path = "C:\\images";
         selectedFile.renameTo(new File(path));
 
         fotos.add(selectedFile.getName());
-        System.out.println(fotos.toString());
+        fotoit = fotos.listIterator();
+        image = new Image("file:C:\\images\\" + fotoit.next());
+        view.setImage(image);
+    }
+    
+    private void borrarFoto(linkedList fotos, ListIterator it) {
+        
+        if (fotos.size() >= 1){
+            it.previous();
+            fotos.remove(it.next());
+        }
+
+        fotoit = fotos.listIterator();
+        if (fotoit != null)
+            image = new Image("file:C:\\images\\" + fotoit.next());
+        else
+            image = null;
+
+        view.setImage(image);
+        view.setFitHeight(100);
+        view.setFitWidth(100);
     }
 
     private void nextFoto(ListIterator it) {
-        image = new Image("file:C:\\Users\\LuisA\\OneDrive\\Escritorio\\images\\" + it.next());
-        view.setImage(image);
+        if (it != null){
+            image = new Image("file:C:\\images\\" + it.next());
+            view.setImage(image);
+        }
     }
 
     private void previousFoto(ListIterator it) {
-        image = new Image("file:C:\\Users\\LuisA\\OneDrive\\Escritorio\\images\\" + it.previous());
-        view.setImage(image);
+        if (it != null){
+            image = new Image("file:C:\\images\\" + it.previous());
+            view.setImage(image);
+        }
     }
 
     public void ordenar(String criterio) {
