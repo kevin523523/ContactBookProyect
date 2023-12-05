@@ -16,6 +16,7 @@ import java.util.ArrayList;
 public class Perfil implements Serializable {
     
     public String nombre;
+    public String apellido;
     public String dirección;
     public String email;
     public String numero;
@@ -24,8 +25,9 @@ public class Perfil implements Serializable {
     public boolean favorito;
 
     
-    public Perfil(String nombre, String dirección, String email, String numero, linkedList<String> fotos){
+    public Perfil(String nombre, String apellido, String dirección, String email, String numero, linkedList<String> fotos){
         this.nombre = nombre;
+        this.apellido = apellido;
         this.dirección = dirección;
         this.email = email;
         this.numero = numero;
@@ -41,6 +43,14 @@ public class Perfil implements Serializable {
         this.dirección = dirección;
     }
 
+    public String getApellido() {
+        return apellido;
+    }
+
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
+    
     public String getEmails() {
         return email;
     }
