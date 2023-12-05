@@ -10,6 +10,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.ListIterator;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -129,11 +131,11 @@ public class VistaContactos {
     
 
 
-    public void cargarcontactos(ListIterator it, linkedList link) { 
+    public void cargarcontactos(ListIterator it, linkedList link) {
 
         int num = 0;
         while (num < 5){
-            if (link.size() <= num)
+            if (link.size() <= num){
                 return;
             }
             
@@ -292,7 +294,7 @@ public class VistaContactos {
         
         Button btnfoto = new Button("Agregar Foto");
         fotos = new linkedList<>();
-        btnfoto.setOnMouseClicked(e -> agregarFoto());
+        btnfoto.setOnMouseClicked(e -> agregarFoto(fotos));
 
 
         btnfoto = new Button("Agregar Foto");
@@ -363,9 +365,6 @@ public class VistaContactos {
         String direccion = txtdir.getText();
         String email = txtmail.getText();
         String numero = txtnum.getText();
-
-        
-
         String nacionalidad = pais.valueProperty().get();
         String amigo = contactos.valueProperty().get();
         if (amigo != null)
@@ -430,7 +429,7 @@ public class VistaContactos {
         fotos = perfil.getFotos();
         System.out.println(fotos.toString());
         ListIterator fotoit = fotos.listIterator();
-        image = new Image("file:C:\\Users\\LuisA\\OneDrive\\Escritorio\\images\\" + fotoit.next());
+        image = new Image("file:C:\\images\\" + fotoit.next());
         view = new ImageView(image);
         
         view.setFitHeight(100);
@@ -469,7 +468,6 @@ public class VistaContactos {
         
     
         root.getChildren().addAll(titulo, imagenes, datos, btnedit);
-    }   
 
         root.getChildren().addAll(titulo, imagenes, nose, datos, btnedit);
     }
@@ -632,20 +630,42 @@ public class VistaContactos {
         refresh(it, listaContactos);
     }
 
-    private void agregarFoto() {
+    private void agregarFoto(linkedList fotos) {
         FileChooser f = new FileChooser();
-        f.setInitialDirectory(new File("C:\\Users\\LuisA\\OneDrive\\Escritorio\\images"));
+        f.setInitialDirectory(new File("C:\\images"));
         File selectedFile = f.showOpenDialog(primaryStage);
 //        System.out.println(selectedFile.getName());
         
 //        Path from = Paths.get(selectedFile.toURI());
 //        Path to = Paths.get("C:\\Users\\LuisA\\OneDrive\\Escritorio\\images");
         
-        String path = "C:\\Users\\LuisA\\OneDrive\\Escritorio\\images";
+        String path = "C:\\images";
         selectedFile.renameTo(new File(path));
         
         fotos.add(selectedFile.getName());
-        System.out.println(fotos.toString());
+        fotoit = fotos.listIterator();
+        image = new Image("file:C:\\images\\" + fotoit.next());
+        view.setImage(image);
+        view.setFitHeight(100);
+        view.setFitWidth(100);
+    }
+    
+    private void borrarFoto(linkedList fotos, ListIterator it) {
+        
+        if (fotos.size() >= 1){
+            it.previous();
+            fotos.remove(it.next());
+        }
+
+        fotoit = fotos.listIterator();
+        if (fotoit != null)
+            image = new Image("file:C:\\images\\" + fotoit.next());
+        else
+            image = null;
+
+        view.setImage(image);
+        view.setFitHeight(100);
+        view.setFitWidth(100);
     }
 
     private void nextFoto(ListIterator it) {

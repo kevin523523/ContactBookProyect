@@ -116,6 +116,14 @@ public class Perfil implements Serializable {
     public void setContactos(linkedList<String> contactos) {
         this.contactos = contactos;
     }
+
+    public String getPais() {
+        return pais;
+    }
+
+    public void setPais(String pais) {
+        this.pais = pais;
+    }
     
     
 
