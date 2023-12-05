@@ -52,29 +52,37 @@ public class crearContacto {
         lblTitulo.setAlignment(Pos.CENTER_RIGHT);
         Font fuente = Font.font("Verdana", FontWeight.EXTRA_BOLD, 25);
         lblTitulo.setFont(fuente);
-
+        
+        root.setAlignment(Pos.CENTER);
+        
         GridPane datos = new GridPane();
-
-        Label lblname = new Label("Nombre ");
+        
+        Label lblname = new Label("Nombre: ");
         txtnombre = new TextField();
-        datos.add(lblname, 0, 0);
-        datos.add(txtnombre, 1, 0);
-
-        Label lbldir = new Label("Dirección  ");
+        datos.add(lblname,0,0);
+        datos.add(txtnombre,1,0);
+        
+        Label lblsurname = new Label("Apellido: ");
+        txtnombre = new TextField();
+        datos.add(lblsurname,0,1);
+        datos.add(txtnombre,1,1);
+        
+        Label lbldir = new Label("Dirección:  ");
         txtdir = new TextField();
-        datos.add(lbldir, 0, 1);
-        datos.add(txtdir, 1, 1);
-
-        Label lblmail = new Label("email  ");
+        datos.add(lbldir,0,2);
+        datos.add(txtdir,1,2);
+        
+        Label lblmail = new Label("Email:  ");
         txtmail = new TextField();
-        datos.add(lblmail, 0, 2);
-        datos.add(txtmail, 1, 2);
-
-        Label lblnum = new Label("numero  ");
+        datos.add(lblmail,0,3);
+        datos.add(txtmail,1,3);
+        
+        
+        Label lblnum = new Label("Número:  ");
         txtnum = new TextField();
-        datos.add(lblnum, 0, 3);
-        datos.add(txtnum, 1, 3);
-
+        datos.add(lblnum,0,4);
+        datos.add(txtnum,1,4);
+        
         datos.setAlignment(Pos.CENTER);
 
         GridPane.setHalignment(lblname, HPos.CENTER);
@@ -95,8 +103,8 @@ public class crearContacto {
         botones.setAlignment(Pos.CENTER);
 
         root.getChildren().addAll(lblTitulo, datos, botones);
-        root.setAlignment(Pos.CENTER);
-
+        
+        
         var scene = new Scene(root, 640, 480);
         stage.setScene(scene);
         stage.show();
@@ -113,11 +121,12 @@ public class crearContacto {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-
-        String nombre = txtnombre.getText();
+        
+        /*String nombre = txtnombre.getText();
+>>>>>>> Stashed changes
         String direccion = txtdir.getText();
         String email = txtmail.getText();
-        String numero = txtnum.getText();
+        String numero = txtnum.getText();*/
 
 //        try {
 //            OutputStream fos = new FileOutputStream("c" + archivo + ".ser");

@@ -64,6 +64,7 @@ public class VistaContactos {
 
     public void start(Stage primaryStage) throws Exception {
         titulo = new Label("Contactos");
+        titulo.setAlignment(Pos.CENTER);
         Font fuente = Font.font("Verdana", FontWeight.EXTRA_BOLD, 25);
         titulo.setFont(fuente);
         //-----------------------XXXXXXX----------------------------//
@@ -74,7 +75,8 @@ public class VistaContactos {
         TextField criterio = new TextField();
 
         atributos.getChildren().addAll(nombreP, direccionP, emailP, numeroP);
-        VBox.setMargin(atributos, new Insets(10));
+        atributos.setAlignment(Pos.CENTER);
+        VBox.setMargin(atributos, new Insets(20));
 
         //-----------------------Perfiles---------------------------//
         OperacionesArchivo operaciones = new OperacionesArchivo();
@@ -91,7 +93,7 @@ public class VistaContactos {
         Button btnprv = new Button("<");
         Button btnord = new Button("Ordenar");
         lineaBotones.getChildren().addAll(btnadd, btnref, btnprv, btnnxt, btnord, criterio);
-        VBox.setMargin(lineaBotones, new Insets(10));
+        VBox.setMargin(lineaBotones, new Insets(20));
         lineaBotones.setAlignment(Pos.BASELINE_RIGHT);
         btnadd.setOnMouseClicked(e -> crearContacto());
         // Manejador de eventos para el botón de ordenar
@@ -291,7 +293,7 @@ public class VistaContactos {
         fotos = perfil.getFotos();
         System.out.println(fotos.toString());
         ListIterator fotoit = fotos.listIterator();
-        image = new Image("file:C:\\Users\\LuisA\\OneDrive\\Escritorio\\images\\" + fotoit.next());
+        image = new Image("file:C:\\Users\\LuisA\\OneDrive\\Escritorio\\images" + fotoit.next());
         view = new ImageView(image);
 
         view.setFitHeight(100);
