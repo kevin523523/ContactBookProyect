@@ -135,47 +135,5 @@ public class Perfil implements Serializable, Comparable<Perfil> {
         return nombre.compareTo(otroPerfil.getNombre());
     }
 
-    // Comparador para ordenar por apellido y nombre
-    public static Comparator<Perfil> compareByApellidoYNombre() {
-        Comparator<Perfil> comparadorApellido_Nombre = new Comparator<Perfil>() {
-            @Override
-            public int compare(Perfil perfil1, Perfil perfil2) {
-                if ((perfil1.getNombre() == perfil2.getNombre()) && (perfil1.getApellido() == perfil2.getApellido())) {
-                    return 0;
-                }
-                return -1;
-            }
-        };
-        return comparadorApellido_Nombre;
-    }
-
-    // Comparador para ordenar por pais de residencia
-    public static Comparator<Perfil> compareByCountry() {
-        Comparator<Perfil> comparadorPais = new Comparator<Perfil>() {
-            @Override
-            public int compare(Perfil perfil1, Perfil perfil2) {
-                if (perfil1.getPais() == perfil2.getPais()) {
-                    return 0;
-                }
-                return -1;
-            }
-        };
-        return comparadorPais;
-    }
-
-    // Comparador para ordenar por cantidad de fotos
-    public static Comparator<Perfil> compareByCantidadFotos() {
-        Comparator<Perfil> comparadorCantidadFotos = new Comparator<Perfil>() {
-            @Override
-            public int compare(Perfil perfil1, Perfil perfil2) {
-                if (perfil1.getFotos().size() == perfil2.getFotos().size()) {
-                    return 0;
-                } else {
-                    return 1;
-                }
-            }
-        };
-        return comparadorCantidadFotos;
-    }
 
 }
