@@ -378,7 +378,7 @@ public class VistaContactos {
         
         fotos = perfil.getFotos();
         System.out.println(fotos.toString());
-        ListIterator fotoit = fotos.listIterator();
+        fotoit = fotos.listIterator();
         image = new Image("file:C:\\images\\" + fotoit.next());
         view = new ImageView(image);
         
@@ -599,7 +599,6 @@ public class VistaContactos {
         view.setImage(image);
     }
 
-
     public void ordenar(String criterio) {
         System.out.println(listaContactos);
         
@@ -652,8 +651,13 @@ public class VistaContactos {
     private void abrirContacto(String a) {
         for (Perfil b : listaContactos){
             if (a == b.getNombre()){
-                datos.getChildren().clear();
-                mostrarPerfil(b);
+//                datos.getChildren().clear();
+                try {
+                    vistaConocido vC = new vistaConocido(b, lblcntct);
+                    vC.start(new Stage());
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
             }
         }
     }
