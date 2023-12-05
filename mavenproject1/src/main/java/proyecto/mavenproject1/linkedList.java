@@ -226,7 +226,6 @@ public class linkedList<E> implements List<E>, Serializable {
     public E set(int index, E element) {
         node current = first;
 
-        //Buscando el nodo
         while (current.index != index) {
             current = current.next;
         }
@@ -419,4 +418,22 @@ public class linkedList<E> implements List<E>, Serializable {
         //s += this.first.previous.toString();
         return s;
     }
+    public void invertirLista() {
+    if (size > 1) {
+        node<E> current = first;
+        node<E> temp;
+
+        do {
+            temp = current.next;
+            current.next = current.previous;
+            current.previous = temp;
+            current = temp;
+        } while (current != first);
+
+        temp = first;
+        first = last;
+        last = temp;
+    }
+}
+
 }

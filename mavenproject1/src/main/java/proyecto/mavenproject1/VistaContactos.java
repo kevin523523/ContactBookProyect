@@ -151,11 +151,18 @@ public class VistaContactos {
     public void refresh(ListIterator it, linkedList link) {
 
         root.getChildren().clear();
-
         int num2 = 0;
-        while (num2 < 5) {
-            it.previous();
-            num2++;
+        if (link.size() < 5){
+            while (num2 < link.size()){
+                it.previous();
+                num2++;
+            }
+        }
+        else{
+            while (num2 < 5){
+                it.previous();
+                num2++;
+            }
         }
 
         root.getChildren().addAll(titulo, lineaBotones, atributos);
@@ -425,18 +432,20 @@ public class VistaContactos {
     }
 
     public void ordenar(String criterio) {
-        System.out.println(listaContactos);
-        Comparator<Perfil> comparadorApellido_Nombre = new Comparator<Perfil>() {
-            @Override
-            public int compare(Perfil perfil1, Perfil perfil2) {
-                // Comparar por apellido y luego por nombre
-                int comparacionApellido = perfil1.getApellido().compareTo(perfil2.getApellido());
-                if (comparacionApellido != 0) {
-                    return comparacionApellido;
-                }
-                return perfil1.getNombre().compareTo(perfil2.getNombre());
-            }
-        };
+Comparator<Perfil> comparadorApellido_Nombre = new Comparator<Perfil>() {
+    @Override
+    public int compare(Perfil perfil1, Perfil perfil2) {
+        // Comparar por apellido
+        int comparacionApellido = perfil1.getApellido().compareTo(perfil2.getApellido());
+        
+        // Si los apellidos son iguales, comparar por nombre
+        if (comparacionApellido == 0) {
+            return perfil1.getNombre().compareTo(perfil2.getNombre());
+        } else {
+            return comparacionApellido;
+        }
+    }
+};
         Comparator<Perfil> comparadorCantidadFotos = new Comparator<Perfil>() {
             @Override
             public int compare(Perfil perfil1, Perfil perfil2) {
@@ -459,13 +468,14 @@ public class VistaContactos {
         };
         if ("nombre".equalsIgnoreCase(criterio)) {
             Collections.sort(listaContactos, comparadorApellido_Nombre);
+            System.out.println(listaContactos);
 
         } else if ("fotos".equalsIgnoreCase(criterio)) {
             Collections.sort(listaContactos, comparadorCantidadFotos);
         } else if ("pais".equalsIgnoreCase(criterio)) {
             Collections.sort(listaContactos,comparadorPais);
         }
-        System.out.println(listaContactos);
+        
         refresh(it, listaContactos);
     }
 
