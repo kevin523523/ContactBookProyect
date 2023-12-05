@@ -52,31 +52,6 @@ public class crearContacto {
         lblTitulo.setAlignment(Pos.CENTER_RIGHT);
         Font fuente = Font.font("Verdana", FontWeight.EXTRA_BOLD, 25);
         lblTitulo.setFont(fuente);
-<<<<<<< Updated upstream
-
-        GridPane datos = new GridPane();
-
-        Label lblname = new Label("Nombre ");
-        txtnombre = new TextField();
-        datos.add(lblname, 0, 0);
-        datos.add(txtnombre, 1, 0);
-
-        Label lbldir = new Label("Dirección  ");
-        txtdir = new TextField();
-        datos.add(lbldir, 0, 1);
-        datos.add(txtdir, 1, 1);
-
-        Label lblmail = new Label("email  ");
-        txtmail = new TextField();
-        datos.add(lblmail, 0, 2);
-        datos.add(txtmail, 1, 2);
-
-        Label lblnum = new Label("numero  ");
-        txtnum = new TextField();
-        datos.add(lblnum, 0, 3);
-        datos.add(txtnum, 1, 3);
-
-=======
         
         root.setAlignment(Pos.CENTER);
         
@@ -108,7 +83,6 @@ public class crearContacto {
         datos.add(lblnum,0,4);
         datos.add(txtnum,1,4);
         
->>>>>>> Stashed changes
         datos.setAlignment(Pos.CENTER);
 
         GridPane.setHalignment(lblname, HPos.CENTER);
@@ -129,13 +103,8 @@ public class crearContacto {
         botones.setAlignment(Pos.CENTER);
 
         root.getChildren().addAll(lblTitulo, datos, botones);
-<<<<<<< Updated upstream
-        root.setAlignment(Pos.CENTER);
-
-=======
         
         
->>>>>>> Stashed changes
         var scene = new Scene(root, 640, 480);
         stage.setScene(scene);
         stage.show();
@@ -146,23 +115,12 @@ public class crearContacto {
 
         try {
             InputStream fis = new FileInputStream("c" + archivo + ".ser");
-<<<<<<< Updated upstream
             ObjectInputStream ois = new ObjectInputStream(fis);
             contactos = (linkedList<Perfil>) ois.readObject();
             ois.close();
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-
-        String nombre = txtnombre.getText();
-=======
-            try (ObjectInputStream ois = new ObjectInputStream(fis)) {
-                contactos = (linkedList<Perfil>)ois.readObject();
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        
         
         /*String nombre = txtnombre.getText();
 >>>>>>> Stashed changes
