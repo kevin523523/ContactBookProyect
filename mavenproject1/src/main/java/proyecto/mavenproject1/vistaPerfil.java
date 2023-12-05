@@ -35,7 +35,7 @@ public class vistaPerfil {
     }
     
     public void start(Stage stage) {
-        lblTitulo = new Label("Perrfil");
+        lblTitulo = new Label("Perfil");
         Font fuente = Font.font("Verdana", FontWeight.EXTRA_BOLD, 25);
         lblTitulo.setFont(fuente);
         
