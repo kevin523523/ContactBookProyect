@@ -84,7 +84,7 @@ public class VistaContactos {
         Font fuente = Font.font("Verdana", FontWeight.EXTRA_BOLD, 25);
         titulo.setFont(fuente);
         //-----------------------XXXXXXX----------------------------//
-        atributos.setSpacing(20);
+        atributos.setSpacing(30);
         Label nombreP = new Label("Nombre");
         Label apellidoP = new Label("Apellido");
         Label direccionP = new Label("Dirección");
@@ -162,6 +162,7 @@ public class VistaContactos {
             }
 
             HBox caja = new HBox();
+            caja.setSpacing(30);
             VBox.setMargin(caja, new Insets(10));
             Button btnbor = new Button("X");
             CheckBox check = new CheckBox();
