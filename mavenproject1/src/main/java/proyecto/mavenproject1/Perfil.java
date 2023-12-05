@@ -20,17 +20,26 @@ public class Perfil implements Serializable {
     public String dirección;
     public String email;
     public String numero;
-    public String identificador;
-    public linkedList<String> fotos; 
+    public String pais;
+    public linkedList<String> identificador;
+    public linkedList<String> fotos;
+    public linkedList<String> contactos;
+
     public boolean favorito;
 
+
     
-    public Perfil(String nombre, String apellido, String dirección, String email, String numero, linkedList<String> fotos){
+
+    public Perfil(String nombre, String apellido, String dirección, String email, String numero, String pais, linkedList<String> contactos, linkedList<String> identificador, linkedList<String> fotos){
+
         this.nombre = nombre;
         this.apellido = apellido;
         this.dirección = dirección;
         this.email = email;
         this.numero = numero;
+        this.pais = pais;
+        this.contactos = contactos;
+        this.identificador = identificador;
         this.fotos = fotos;
         this.favorito = false;
     }
@@ -50,14 +59,6 @@ public class Perfil implements Serializable {
     public void setApellido(String apellido) {
         this.apellido = apellido;
     }
-    
-    public String getEmails() {
-        return email;
-    }
-
-    public void setEmails(String emails) {
-        this.email = emails;
-    }
 
     public String getEmail() {
         return email;
@@ -75,11 +76,11 @@ public class Perfil implements Serializable {
         this.numero = numero;
     }
 
-    public String getIdentificador() {
+    public linkedList<String> getIdentificador() {
         return identificador;
     }
 
-    public void setIdentificador(String identificador) {
+    public void setIdentificador(linkedList<String> identificador) {
         this.identificador = identificador;
     }
     
@@ -106,7 +107,19 @@ public class Perfil implements Serializable {
     public void setFavorito(boolean favorito) {
         this.favorito = favorito;
     }
+
+
+    public linkedList<String> getContactos() {
+        return contactos;
+    }
+
+    public void setContactos(linkedList<String> contactos) {
+        this.contactos = contactos;
+    }
     
+    
+
+
     @Override
     public String toString(){
         String s = "nombre: " + nombre + ", email: " + email + ", numero: " + numero + ", identificador: " + identificador + ", fotos:" + fotos.toString() + ", favorito: " + favorito;

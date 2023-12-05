@@ -16,8 +16,12 @@ import java.util.ListIterator;
 public class linkedList<E> implements List<E>, Serializable{
     
     private int size = 0;
+
     
     private node<E> first = null;
+
+
+
     private node<E> last = null;
     
     public linkedList() {
@@ -29,7 +33,7 @@ public class linkedList<E> implements List<E>, Serializable{
     public class node<E> implements Serializable{
         
         node<E> next, previous;
-        private E content;
+        public E content;
         private int index;
         
         public node(E content){
