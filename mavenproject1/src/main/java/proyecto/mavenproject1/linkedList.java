@@ -84,10 +84,16 @@ public class linkedList<E> implements List<E>, Serializable{
         
         return it;
     }
-
     @Override
     public Object[] toArray() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        Object[] array = new Object[size];
+        int index = 0;
+
+        for (E element : this) {
+            array[index++] = element;
+        }
+
+        return array;
     }
 
     @Override
@@ -368,10 +374,13 @@ public class linkedList<E> implements List<E>, Serializable{
             public void remove() {
                 throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
             }
-
             @Override
             public void set(E e) {
-                throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+                if (node != null) {
+                    node.content = e;
+                } else {
+                    throw new IllegalStateException("No se ha llamado a next() o previous() o ya se ha eliminado el elemento.");
+                }
             }
 
             @Override
@@ -400,7 +409,7 @@ public class linkedList<E> implements List<E>, Serializable{
         for (node<E> v = this.first; v != this.last; v = v.next){
             s += v.content.toString() + " ";
         }
-        s += last.content.toString();
+//        s += last.content.toString();
         return s;
     }
 }
