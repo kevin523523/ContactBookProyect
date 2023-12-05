@@ -290,7 +290,7 @@ public class VistaContactos {
         fotos = perfil.getFotos();
         System.out.println(fotos.toString());
         ListIterator fotoit = fotos.listIterator();
-        image = new Image("file:C:\\Users\\LuisA\\OneDrive\\Escritorio\\images\\" + fotoit.next());
+        image = new Image("file:C:\\Users\\LuisA\\OneDrive\\Escritorio\\images" + fotoit.next());
         view = new ImageView(image);
 
         view.setFitHeight(100);
