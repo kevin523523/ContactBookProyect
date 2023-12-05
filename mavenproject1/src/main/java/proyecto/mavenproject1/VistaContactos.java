@@ -292,8 +292,6 @@ public class VistaContactos {
         btnagregar.setOnMouseClicked(e -> agregarPerfil());
 
 
-        
-        root.getChildren().addAll(titulo, datos, btnagregar, btnfoto);
 
         root.getChildren().addAll(titulo, datos, btnfoto, imagenes, btnborrar, pais, contactos, btnagregar);
 
@@ -418,8 +416,6 @@ public class VistaContactos {
         
         datos.setAlignment(Pos.CENTER);
         
-    
-        root.getChildren().addAll(titulo, imagenes, datos, btnedit);
 
         root.getChildren().addAll(titulo, imagenes, nose, datos, btnedit);
     }
