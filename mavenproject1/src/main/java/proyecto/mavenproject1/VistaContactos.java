@@ -160,9 +160,17 @@ public class VistaContactos {
         root.getChildren().clear();
 
         int num2 = 0;
-        while (num2 < 5) {
-            it.previous();
-            num2++;
+        if (link.size() < 5){
+            while (num2 < link.size()){
+                it.previous();
+                num2++;
+            }
+        }
+        else{
+            while (num2 < 5){
+                it.previous();
+                num2++;
+            }
         }
 
         root.getChildren().addAll(titulo, lineaBotones, atributos);
@@ -437,6 +445,7 @@ public class VistaContactos {
 
     public void ordenar(String criterio) {
         System.out.println(listaContactos);
+        
         Comparator<Perfil> comparadorApellido_Nombre = new Comparator<Perfil>() {
             @Override
             public int compare(Perfil perfil1, Perfil perfil2) {
@@ -448,6 +457,7 @@ public class VistaContactos {
                 return perfil1.getNombre().compareTo(perfil2.getNombre());
             }
         };
+        
         Comparator<Perfil> comparadorCantidadFotos = new Comparator<Perfil>() {
             @Override
             public int compare(Perfil perfil1, Perfil perfil2) {
@@ -458,6 +468,7 @@ public class VistaContactos {
                 }
             }
         };
+        
         // Comparador para ordenar por pais de residencia
         Comparator<Perfil> comparadorPais = new Comparator<Perfil>() {
             @Override
@@ -468,14 +479,15 @@ public class VistaContactos {
                 return -1;
             }
         };
+        
         if ("nombre".equalsIgnoreCase(criterio)) {
             Collections.sort(listaContactos, comparadorApellido_Nombre);
-
         } else if ("fotos".equalsIgnoreCase(criterio)) {
             Collections.sort(listaContactos, comparadorCantidadFotos);
         } else if ("pais".equalsIgnoreCase(criterio)) {
             Collections.sort(listaContactos,comparadorPais);
         }
+        
         System.out.println(listaContactos);
         refresh(it, listaContactos);
     }
