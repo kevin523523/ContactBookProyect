@@ -26,8 +26,10 @@ public class Perfil implements Serializable, Comparable<Perfil> {
     public String pais;
     public String tipo;
 
-    public Perfil(String nombre, String dirección, String email, String numero, linkedList<String> fotos) {
+
+    public Perfil(String nombre, String apellido, String dirección, String email, String numero, linkedList<String> fotos){
         this.nombre = nombre;
+        this.apellido = apellido;
         this.dirección = dirección;
         this.email = email;
         this.numero = numero;
@@ -43,6 +45,14 @@ public class Perfil implements Serializable, Comparable<Perfil> {
         this.dirección = dirección;
     }
 
+    public String getApellido() {
+        return apellido;
+    }
+
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
+    
     public String getEmails() {
         return email;
     }
@@ -81,14 +91,6 @@ public class Perfil implements Serializable, Comparable<Perfil> {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
-    }
-
-    public String getApellido() {
-        return apellido;
-    }
-
-    public void setApellido(String apellido) {
-        this.apellido = apellido;
     }
 
     public String getPais() {

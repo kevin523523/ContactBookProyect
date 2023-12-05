@@ -44,10 +44,12 @@ public class VistaContactos {
     HBox lineaBotones = new HBox();
     ListIterator it;
     TextField txtnombre = new TextField();
+    TextField txtApellido = new TextField();
     TextField txtdir = new TextField();
     TextField txtmail = new TextField();
     TextField txtnum = new TextField();
     Label lblname;
+    Label lblApellido;
     Label lbldir;
     Label lblmail;
     Label lblnum;
@@ -116,12 +118,13 @@ public class VistaContactos {
             CheckBox check = new CheckBox();
             Perfil perfil = (Perfil) it.next();
             Label nombre = new Label(perfil.getNombre());
+            Label apellido = new Label(perfil.getApellido());
             Label direccion = new Label(perfil.getDirección());
             Label email = new Label(perfil.getEmails());
             Label numero = new Label(perfil.getNumero());
             nombre.setOnMouseClicked(e -> mostrarPerfil(perfil));
             btnbor.setOnMouseClicked(e -> borrar(perfil));
-            caja.getChildren().addAll(check, nombre, direccion, email, numero, btnbor);
+            caja.getChildren().addAll(check, nombre, apellido, direccion, email, numero, btnbor);
             root.getChildren().add(caja);
             num++;
         }
@@ -183,18 +186,22 @@ public class VistaContactos {
         datos.add(lblname,0,0);
         datos.add(txtnombre,1,0);
         
+        lblApellido = new Label("Apellido ");
+        datos.add(lblApellido,0,1);
+        datos.add(txtApellido,1,1);
+        
         lbldir = new Label("Dirección  ");
-        datos.add(lbldir,0,1);
-        datos.add(txtdir,1,1);
+        datos.add(lbldir,0,2);
+        datos.add(txtdir,1,2);
         
         lblmail = new Label("email  ");
-        datos.add(lblmail,0,2);
-        datos.add(txtmail,1,2);
+        datos.add(lblmail,0,3);
+        datos.add(txtmail,1,3);
         
         
         lblnum = new Label("numero  ");
-        datos.add(lblnum,0,3);
-        datos.add(txtnum,1,3);
+        datos.add(lblnum,0,4);
+        datos.add(txtnum,1,4);
         
         datos.setAlignment(Pos.CENTER);
         
@@ -217,6 +224,7 @@ public class VistaContactos {
         }
 
         String nombre = txtnombre.getText();
+        String apellido = txtApellido.getText();
         String direccion = txtdir.getText();
         String email = txtmail.getText();
         String numero = txtnum.getText();
@@ -224,7 +232,7 @@ public class VistaContactos {
         try {
             OutputStream fos = new FileOutputStream("c" + archivo + ".ser");
             ObjectOutputStream oos = new ObjectOutputStream(fos);
-            Perfil contacto = new Perfil(nombre, direccion, email, numero, fotos);
+            Perfil contacto = new Perfil(nombre, apellido, direccion, email, numero, fotos);
             listaContactos.add(contacto);
             oos.writeObject(listaContactos);
             oos.flush();
@@ -238,6 +246,7 @@ public class VistaContactos {
         }
         
         txtnombre.clear();
+        txtApellido.clear();
         txtdir.clear();
         txtmail.clear();
         txtnum.clear();
@@ -258,15 +267,17 @@ public class VistaContactos {
         lblname = new Label(perfil.getNombre());
         datos.add(lblname,0,0);
         
+        lblApellido = new Label(perfil.getApellido());
+        datos.add(lblApellido,0,1);
+        
         lbldir = new Label(perfil.getDirección());
-        datos.add(lbldir,0,1);
+        datos.add(lbldir,0,2);
         
         lblmail = new Label(perfil.getEmail());
-        datos.add(lblmail,0,2);
-        
+        datos.add(lblmail,0,3);
         
         lblnum = new Label(perfil.getNumero());
-        datos.add(lblnum,0,3);
+        datos.add(lblnum,0,4);
         
         HBox imagenes = new HBox();
         
@@ -304,20 +315,24 @@ public class VistaContactos {
         datos.add(lblname,0,0);
         datos.add(txtnombre,1,0);
         
+        lblApellido.setText("Apellido ");
+        datos.add(lblname,0,1);
+        datos.add(txtnombre,1,1);
+        
         txtdir = new TextField();
         lbldir.setText("Dirección  ");
-        datos.add(lbldir,0,1);
-        datos.add(txtdir,1,1);
+        datos.add(lbldir,0,2);
+        datos.add(txtdir,1,2);
         
         txtmail = new TextField();
         lblmail.setText("email  ");
-        datos.add(lblmail,0,2);
-        datos.add(txtmail,1,2);
+        datos.add(lblmail,0,3);
+        datos.add(txtmail,1,3);
         
         txtnum = new TextField();
         lblnum.setText("numero  ");
-        datos.add(lblnum,0,3);
-        datos.add(txtnum,1,3);
+        datos.add(lblnum,0,4);
+        datos.add(txtnum,1,4);
         
         Button btnsave = new Button("Guardar");
         btnsave.setOnMouseClicked(e -> guardar(perfil));
@@ -329,6 +344,7 @@ public class VistaContactos {
         listaContactos.remove(perfil);
         
         String nombre = txtnombre.getText();
+        String apellido = txtApellido.getText();
         String direccion = txtdir.getText();
         String email = txtmail.getText();
         String numero = txtnum.getText();
@@ -339,7 +355,7 @@ public class VistaContactos {
         try {
             OutputStream fos = new FileOutputStream("c" + archivo + ".ser");
             ObjectOutputStream oos = new ObjectOutputStream(fos);
-            Perfil contacto = new Perfil(nombre, direccion, email, numero, fotos);
+            Perfil contacto = new Perfil(nombre, apellido, direccion, email, numero, fotos);
             listaContactos.add(contacto);
             oos.writeObject(listaContactos);
             oos.flush();
