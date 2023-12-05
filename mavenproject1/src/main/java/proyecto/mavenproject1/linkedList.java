@@ -400,7 +400,7 @@ public class linkedList<E> implements List<E>, Serializable{
         for (node<E> v = this.first; v != this.last; v = v.next){
             s += v.content.toString() + " ";
         }
-        s += last.content.toString();
+//        s += last.content.toString();
         return s;
     }
 }

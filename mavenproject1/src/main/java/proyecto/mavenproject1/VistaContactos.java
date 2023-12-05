@@ -94,6 +94,7 @@ public class VistaContactos {
         Label emailP = new Label("Correo");
         Label numeroP = new Label("Numero telefónico");
         TextField criterio = new TextField();
+        atributos.getChildren().addAll(nombreP, apellidoP, direccionP, emailP, numeroP);
         
         //-----------------------Perfiles---------------------------//
         OperacionesArchivo operaciones = new OperacionesArchivo();
@@ -105,7 +106,7 @@ public class VistaContactos {
         
         //-----------------------Botones---------------------------//
         Button btnadd = new Button("Agregar");
-        Button btnref = new Button("Refresh");
+        Button btnemp = new Button("Refresh");
         Button btnnxt = new Button(">");
         Button btnprv = new Button("<");
 
@@ -116,9 +117,12 @@ public class VistaContactos {
         lineaBotones.setAlignment(Pos.BASELINE_RIGHT);
         btnadd.setOnMouseClicked(e -> crearContacto());
         if (listaContactos != null){
-            btnref.setOnMouseClicked(e -> refresh(it, listaContactos));
+
+
+            btnemp.setOnMouseClicked(e -> crearEmpresa());
             btnnxt.setOnMouseClicked(e -> next(it));
             btnprv.setOnMouseClicked(e -> previous(it));
+            btnord.setOnMouseClicked(e -> ordenar(criterio.getText()));
         }
         
         //------------------------Scene----------------------------//
@@ -154,6 +158,7 @@ public class VistaContactos {
             Label numero = new Label(perfil.getNumero());
             nombre.setOnMouseClicked(e -> mostrarPerfil(perfil));
             btnbor.setOnMouseClicked(e -> borrar(perfil));
+            perfil.favorito = check.isSelected();
             caja.getChildren().addAll(check, nombre, apellido, direccion, email, numero, btnbor);
             root.getChildren().add(caja);
             num++;
@@ -294,6 +299,90 @@ public class VistaContactos {
 
 
         root.getChildren().addAll(titulo, datos, btnfoto, imagenes, btnborrar, pais, contactos, btnagregar);
+
+    }
+    
+    public void crearEmpresa() {
+        root.getChildren().clear();
+        root.setAlignment(Pos.CENTER);
+
+        Button btnnxtft = new Button(">");
+        btnnxtft.setOnMouseClicked(e -> nextFoto(fotoit));
+        Button btnprvft = new Button("<");
+        btnprvft.setOnMouseClicked(e -> previousFoto(fotoit));
+        
+        
+        fotos = new linkedList<>();
+        identificadores = new linkedList<>();
+        
+        
+
+        titulo.setText("Nuevo contacto");
+        Font fuente = Font.font("Verdana", FontWeight.EXTRA_BOLD, 25);
+        titulo.setFont(fuente);
+        titulo.setAlignment(Pos.TOP_CENTER);
+
+        lblname = new Label("Nombre: ");
+        datos.add(lblname, 0, 0);
+        datos.add(txtnombre, 1, 0);
+
+        lblApellido = new Label("Apellido: ");
+        datos.add(lblApellido, 0, 1);
+        datos.add(txtApellido, 1, 1);
+
+        lbldir = new Label("Dirección:  ");
+        datos.add(lbldir, 0, 2);
+        datos.add(txtdir, 1, 2);
+
+        lblmail = new Label("Email:  ");
+        datos.add(lblmail, 0, 3);
+        datos.add(txtmail, 1, 3);
+        
+        lblnum = new Label("Numero telefónico:  ");
+        datos.add(lblnum, 0, 4);
+        datos.add(txtnum, 1, 4);
+
+
+        datos.setAlignment(Pos.CENTER);
+        
+
+        btnfoto = new Button("Agregar Foto");
+        btnfoto.setOnMouseClicked(e -> agregarFoto(fotos));
+        
+        //Lista imagenes
+        HBox imagenes = new HBox();
+        view = new ImageView();
+        view.setFitHeight(100);
+        view.setFitWidth(100);
+        if (!fotos.isEmpty()){
+            fotoit = fotos.listIterator();
+            image = new Image("file:C:\\images\\" + fotoit.next());
+            view.setImage(image);
+        }
+        imagenes.getChildren().addAll(btnprvft, view, btnnxtft);
+        
+        
+        pais = new ComboBox<>();
+        ObservableList<String> ob = pais.getItems();
+        ob.add("Argentina");
+        ob.add("Brasil");
+        ob.add("Colombia");
+        ob.add("Dinamarca");
+        ob.add("Ecuador");
+        ob.add("Francia");
+        ob.add("Guatemala");
+        
+        
+        Button btnborrar = new Button("X");
+        btnborrar.setOnMouseClicked(e -> borrarFoto(fotos, fotoit));
+
+
+        btnagregar = new Button("Agregar");
+        btnagregar.setOnMouseClicked(e -> agregarPerfil());
+
+
+
+        root.getChildren().addAll(titulo, datos, btnfoto, imagenes, btnborrar, pais, btnagregar);
 
     }
     
