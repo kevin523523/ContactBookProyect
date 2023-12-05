@@ -70,6 +70,7 @@ public class VistaContactos {
     ImageView view;
     Button btnagregar;
     Button btnfoto;
+    Button btnsave;
     ComboBox<String> pais;
     ComboBox<String> contactos;
 
@@ -80,16 +81,19 @@ public class VistaContactos {
     }
 
     public void start(Stage primaryStage) throws Exception {
+        root.setAlignment(Pos.CENTER);
         titulo = new Label("Contactos");
+        titulo.setAlignment(Pos.TOP_CENTER);
         Font fuente = Font.font("Verdana", FontWeight.EXTRA_BOLD, 25);
         titulo.setFont(fuente);
         //-----------------------XXXXXXX----------------------------//
+        atributos.setSpacing(20);
         Label nombreP = new Label("Nombre");
+        Label apellidoP = new Label("Apellido");
         Label direccionP = new Label("Dirección");
-        Label emailP = new Label("Correos");
+        Label emailP = new Label("Correo");
         Label numeroP = new Label("Numero telefónico");
-        atributos.getChildren().addAll(nombreP, direccionP, emailP, numeroP);
-        VBox.setMargin(atributos, new Insets(10));
+        TextField criterio = new TextField();
         
         //-----------------------Perfiles---------------------------//
         OperacionesArchivo operaciones = new OperacionesArchivo();
@@ -104,8 +108,6 @@ public class VistaContactos {
         Button btnref = new Button("Refresh");
         Button btnnxt = new Button(">");
         Button btnprv = new Button("<");
-
-        lineaBotones.getChildren().addAll(btnadd, btnref, btnprv, btnnxt);
 
         Button btnord = new Button("Ordenar");
         lineaBotones.getChildren().addAll(btnadd, btnprv, btnnxt, btnord, criterio);
@@ -192,59 +194,9 @@ public class VistaContactos {
             it.previous();
             revers++;
         }
-        
-        
-        root.getChildren().clear();
-        
-        root.getChildren().addAll(titulo, lineaBotones, atributos);
-        cargarcontactos(it, listaContactos);
-    }
-    
-    public void crearContacto(){
-        root.getChildren().clear();
-        
-        titulo.setText("Nuevo contacto");
-        Font fuente = Font.font("Verdana", FontWeight.EXTRA_BOLD, 25);
-        titulo.setFont(fuente);
-        
-        
-        lblname = new Label("Nombre ");
-        datos.add(lblname,0,0);
-        datos.add(txtnombre,1,0);
-        
-        lblApellido = new Label("Apellido ");
-        datos.add(lblApellido,0,1);
-        datos.add(txtApellido,1,1);
-        
-        lbldir = new Label("Dirección  ");
-        datos.add(lbldir,0,2);
-        datos.add(txtdir,1,2);
-        
-        lblmail = new Label("email  ");
-        datos.add(lblmail,0,3);
-        datos.add(txtmail,1,3);
-        
-        
-        lblnum = new Label("numero  ");
-        datos.add(lblnum,0,4);
-        datos.add(txtnum,1,4);
-        
 
         root.getChildren().clear();
-
-        root.getChildren().addAll(titulo, lineaBotones, atributos);
-        cargarcontactos(it, listaContactos);
-    }
-
-    public void previous(ListIterator it) {
-        int revers = 0;
-        while (revers < 6) {
-            it.previous();
-            revers++;
-        }
-
-        root.getChildren().clear();
-
+        
         root.getChildren().addAll(titulo, lineaBotones, atributos);
         cargarcontactos(it, listaContactos);
     }
@@ -477,33 +429,6 @@ public class VistaContactos {
         datos.getChildren().clear();
 
         
-        txtnombre = new TextField();
-        lblname.setText("Nombre ");
-        datos.add(lblname,0,0);
-        datos.add(txtnombre,1,0);
-        
-        lblApellido.setText("Apellido ");
-        datos.add(lblname,0,1);
-        datos.add(txtnombre,1,1);
-        
-        txtdir = new TextField();
-        lbldir.setText("Dirección  ");
-        datos.add(lbldir,0,2);
-        datos.add(txtdir,1,2);
-        
-        txtmail = new TextField();
-        lblmail.setText("email  ");
-        datos.add(lblmail,0,3);
-        datos.add(txtmail,1,3);
-        
-        txtnum = new TextField();
-        lblnum.setText("numero  ");
-        datos.add(lblnum,0,4);
-        datos.add(txtnum,1,4);
-        
-        Button btnsave = new Button("Guardar");
-        btnsave.setOnMouseClicked(e -> guardar(perfil));
-        
         root.getChildren().addAll(titulo, datos, btnsave);
 
 
@@ -565,7 +490,7 @@ public class VistaContactos {
         
         
 
-        Button btnsave = new Button("Guardar");
+        btnsave = new Button("Guardar");
         btnsave.setOnMouseClicked(e -> guardar(perfil));
 
         root.getChildren().addAll(titulo, datos, btnfoto,  imagenes, btnborrar, pais, btnsave);
