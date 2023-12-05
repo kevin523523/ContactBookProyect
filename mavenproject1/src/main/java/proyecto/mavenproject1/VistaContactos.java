@@ -590,12 +590,12 @@ public class VistaContactos {
     }
 
     private void nextFoto(ListIterator it) {
-        image = new Image("file:C:\\Users\\LuisA\\OneDrive\\Escritorio\\images\\" + it.next());
+        image = new Image("file:C:\\images\\" + it.next());
         view.setImage(image);
     }
 
     private void previousFoto(ListIterator it) {
-        image = new Image("file:C:\\Users\\LuisA\\OneDrive\\Escritorio\\images\\" + it.previous());
+        image = new Image("file:C:\\images\\" + it.previous());
         view.setImage(image);
     }
 
