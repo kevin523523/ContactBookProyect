@@ -1,11 +1,14 @@
 package proyecto.mavenproject1;
 
 
+import datos.CONSTANTES;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -52,13 +55,13 @@ public class vistaPerfil {
         
         Label lblnum = new Label(perfil.getNumero());
         datos.add(lblnum,0,3);
-        
+
         Button btnedit = new Button("Editar");
         btnedit.setOnMouseClicked(e -> editar());
         
         datos.setAlignment(Pos.CENTER);
-        
-    
+
+
         root.getChildren().addAll(lblTitulo, datos);
         
         var scene = new Scene(root, 640, 480);

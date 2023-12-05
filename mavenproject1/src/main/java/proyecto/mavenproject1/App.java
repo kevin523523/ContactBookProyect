@@ -1,7 +1,9 @@
 package proyecto.mavenproject1;
 
+import datos.CONSTANTES;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.ObjectOutputStream;
 import java.util.ListIterator;
 import javafx.application.Application;
@@ -12,6 +14,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -29,6 +33,7 @@ public class App extends Application {
     VBox lineaBotones = new VBox();
     GridPane datos = new GridPane();
     Label label = new Label("Gestión de contactos");
+    private ImageView imageView;
 
     @Override
     public void start(Stage stage) {
@@ -44,20 +49,31 @@ public class App extends Application {
         datos.setHgap(10); // Espaciado horizontal entre columnas
         datos.setAlignment(Pos.CENTER);
         lineaBotones.setAlignment(Pos.CENTER);
-        
-        // Configurar márgenes para los elementos (opcional)
-        GridPane.setMargin(btnlog, new Insets(5));
-        GridPane.setMargin(btnreg, new Insets(5));
+
+        // Configurar márgenes para los elementos (opcional) 
+        lineaBotones.setSpacing(20); // 20 píxeles de espacio vertical
+
+        GridPane.setMargin(btnlog, new Insets(20));
+        GridPane.setMargin(btnreg, new Insets(20));
 
         Label lblusuario = new Label("Usuario:  ");
         txtusuario = new TextField();
+        
         datos.add(lblusuario, 0, 0);
         datos.add(txtusuario, 1, 0);
+        try {
+            Image imagen = new Image("file:src/main/java/datos/contactos.jpg", 200, 200, true, true);
+            imageView = new ImageView(imagen);
+        } catch (Exception exception) {
+
+            imageView = new ImageView();
+        }
 
         lineaBotones.getChildren().addAll(btnlog, btnreg);
-
+        root.setSpacing(40);
         root.setAlignment(Pos.CENTER);
         root.getChildren().add(label);
+        root.getChildren().add(imageView);
         root.getChildren().add(datos);
         root.getChildren().add(lineaBotones);
         btnlog.setOnMouseClicked(e -> mostrarContactos());
