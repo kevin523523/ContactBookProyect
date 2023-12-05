@@ -92,6 +92,8 @@ public class VistaContactos {
         Label numeroP = new Label("Numero telefónico");
         TextField criterio = new TextField();
         TextField filtro = new TextField();
+        atributos.getChildren().addAll(nombreP,apellidoP,direccionP,emailP,numeroP);
+        atributos.setAlignment(Pos.CENTER);
 
         //-----------------------Perfiles---------------------------//
         OperacionesArchivo operaciones = new OperacionesArchivo();
